@@ -9,22 +9,23 @@ class App extends Component {
     this.state = {
       monsters: [
         {
-          id: "asci1",
+          id: "11",
           name: "Frankenstein",
         },
         {
-          id: "asci2",
+          id: "12",
           name: "Dracula",
         },
         {
-          id: "asci3",
+          id: "13",
           name: "Zombie",
         },
         {
-          id: "asci4",
+          id: "14",
           name: "Alien",
         },
       ],
+      searchField: "",
     };
   }
 
@@ -36,17 +37,30 @@ class App extends Component {
       .then((users) =>
         this.setState({
           ...this.state,
-          monsters: users,
+          monsters: this.state.monsters.concat(users),
         })
       );
 
-    console.log(this.state.monsters);
+    //  console.log(this.state.monsters);
   }
 
   render() {
+    const { monsters, searchField } = this.state;
+
+    const filteredMonsters = monsters.filter((monster) =>
+      monster.name.toLowerCase().includes(searchField.toLowerCase())
+    );
+
     return (
       <div className="App">
-        <CardList monsters={this.state.monsters} />
+        <input
+          type="search"
+          placeholder="search for monster"
+          onChange={(e) => {
+            this.setState({ searchField: e.target.value });
+          }}
+        />
+        <CardList monsters={filteredMonsters} />
       </div>
     );
   }
