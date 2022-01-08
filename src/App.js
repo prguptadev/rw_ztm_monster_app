@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import logo from "./logo.svg";
 import "./App.css";
 import CardList from "./component/card-list/card-list.component";
+import { SearchBox } from "./component/search-box/search-box-component.jsx";
 
 class App extends Component {
   constructor() {
@@ -27,6 +28,8 @@ class App extends Component {
       ],
       searchField: "",
     };
+
+    this.handleChnage = this.handleChnage.bind(this);
   }
 
   componentDidMount() {
@@ -44,6 +47,10 @@ class App extends Component {
     //  console.log(this.state.monsters);
   }
 
+  handleChnage = (e) => {
+    this.setState({ searchField: e.target.value });
+  };
+
   render() {
     const { monsters, searchField } = this.state;
 
@@ -53,12 +60,13 @@ class App extends Component {
 
     return (
       <div className="App">
-        <input
-          type="search"
-          placeholder="search for monster"
-          onChange={(e) => {
-            this.setState({ searchField: e.target.value });
-          }}
+        <h1>Monster Rolodex</h1>
+        <SearchBox
+          placeholder="search for monsters"
+          // handlerChange={(e) => {
+          //   this.setState({ searchField: e.target.value });
+          // }}
+          handlerChange={this.handleChnage}
         />
         <CardList monsters={filteredMonsters} />
       </div>
